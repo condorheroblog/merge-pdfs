@@ -1,4 +1,4 @@
-# merge-pdfs
+# @condorhero/merge-pdfs
 
 [![NPM version](https://img.shields.io/npm/v/@condorhero/merge-pdfs)](https://www.npmjs.com/package/@condorhero/merge-pdfs)
 [![NPM Downloads](https://img.shields.io/npm/dm/@condorhero/merge-pdfs)](https://www.npmjs.com/package/@condorhero/merge-pdfs)
@@ -16,7 +16,7 @@ In the Javascript world, when merging multiple PDFs with outlines, the outline w
 ## Installation
 
 ```sh
-npm install -D merge-pdfs
+npm install -D @condorhero/merge-pdfs
 ```
 
 ## Usage

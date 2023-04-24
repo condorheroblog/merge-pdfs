@@ -1,5 +1,5 @@
 {
-	"name": "merge-pdfs",
+	"name": "@condorhero/merge-pdfs",
 	"type": "module",
 	"version": "0.0.0",
 	"description": "Merging PDF (with Outline).",
