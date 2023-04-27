@@ -1,21 +1,13 @@
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync } from "node:fs";
 import { extname } from "node:path";
 import { yellowBright } from "colorette";
 
 import fg from "fast-glob";
 import { loadPyodide } from "pyodide";
 
-export interface IMAPMergePDFs {
-	entry: string[]
-	_?: string[]
-	o?: string
-	output: string
-	$0?: string
-}
-
 export const MERGE_PDF_NAME = "66699f18-ad5a-43c2-a96e-97bddaef0e6b.pdf";
 
-export const mergePDFs = async ({ entry, output }: IMAPMergePDFs) => {
+export const mergePDFs = async (entry: string[]) => {
 	const dir = process.cwd();
 	const absolutePathArr = fg.sync(entry, {
 		ignore: ["node_modules"],
@@ -54,11 +46,9 @@ export const mergePDFs = async ({ entry, output }: IMAPMergePDFs) => {
 		merger.close()
 	`);
 
-	const outBuffer = pyodide.FS.readFile(`/${MERGE_PDF_NAME}`);
+	const outBuffer: Buffer = pyodide.FS.readFile(`/${MERGE_PDF_NAME}`);
 
-	if (!output.endsWith(".pdf"))
-		output += ".pdf";
-
-	writeFileSync(output, outBuffer);
 	return outBuffer;
 };
+
+export default mergePDFs;

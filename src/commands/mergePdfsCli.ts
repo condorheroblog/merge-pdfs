@@ -1,9 +1,9 @@
 import { join } from "node:path";
+import { writeFileSync } from "node:fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import { greenBright } from "colorette";
 
-import type { IMAPMergePDFs } from "../";
 import { mergePDFs } from "../";
 import { name, version } from "../../package.json";
 
@@ -29,7 +29,12 @@ export const mergePdfsCli = async () => {
 		.help();
 	const argv = await program.argv;
 	const entry = argv._;
+	let output = argv.o;
 
-	await mergePDFs({ entry, ...argv } as IMAPMergePDFs);
+	const outBuffer = await mergePDFs(entry as string[]);
+	if (!output.endsWith(".pdf"))
+		output += ".pdf";
+
+	writeFileSync(output, outBuffer);
 	process.stdout.write(greenBright(`\n Saved to ${join(process.cwd(), argv.o)}\n`));
 };
