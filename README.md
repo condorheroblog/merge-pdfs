@@ -32,6 +32,21 @@ merge-pdfs 1.pdf 2.pdf -o custom.pdf
 merge-pdfs pdf/*.pdf -o merged-pdf.pdf
 ```
 
+## [For PnPm users](https://github.com/condorheroblog/merge-pdfs/issues/1)
+
+It's recommended that you add the following code to your `.npmrc` file: https://pnpm.io/npmrc#public-hoist-pattern
+
+```bash
+# `.npmrc`
+public-hoist-pattern[]=pyodide
+```
+or
+
+```bash
+# `.npmrc`
+shamefully-hoist=true
+```
+
 ## License
 
 [MIT](https://github.com/condorheroblog/merge-pdfs/blob/main/LICENSE)
