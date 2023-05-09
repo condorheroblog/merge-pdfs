@@ -3,10 +3,10 @@ import type { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
 import { dirname, extname, resolve } from "node:path";
 import { yellowBright } from "colorette";
-import { loadPyodide } from "pyodide";
 import fg from "fast-glob";
 
 import { author, name } from "../package.json";
+import { loadPyodide } from "./pyodide/pyodide";
 
 /**
  * @see https://www.uuidgenerator.net/version4

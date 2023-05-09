@@ -54,7 +54,7 @@
 		"dev": "esno ./src/index.ts",
 		"coverage": "vitest run --coverage",
 		"test": "vitest",
-		"build": "tsup",
+		"build": "tsup --external ws --external node-fetch",
 		"build:watch": "tsup --watch",
 		"typecheck": "tsc --noEmit",
 		"release": "bumpp -r && npm publish"
@@ -66,8 +66,7 @@
 	"dependencies": {
 		"colorette": "^2.0.20",
 		"fast-glob": "^3.2.12",
-		"pyodide": "^0.23.2",
-		"yargs": "^17.7.1"
+		"yargs": "^17.7.2"
 	},
 	"devDependencies": {
 		"@antfu/eslint-config-ts": "^0.38.6",
