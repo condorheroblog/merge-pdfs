@@ -1,7 +1,7 @@
 {
 	"name": "@condorhero/merge-pdfs",
 	"type": "module",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"description": "Merging PDF (with Outline).",
 	"author": "CondorHero",
 	"license": "MIT",
