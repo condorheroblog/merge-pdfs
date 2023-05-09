@@ -1,13 +1,23 @@
+import { fileURLToPath } from "node:url";
+import type { Buffer } from "node:buffer";
 import { readFileSync } from "node:fs";
-import { extname } from "node:path";
+import { dirname, extname, resolve } from "node:path";
 import { yellowBright } from "colorette";
-
-import fg from "fast-glob";
 import { loadPyodide } from "pyodide";
+import fg from "fast-glob";
 
+import { author, name } from "../package.json";
+
+/**
+ * @see https://www.uuidgenerator.net/version4
+ * UUID v4
+ */
 export const MERGE_PDF_NAME = "66699f18-ad5a-43c2-a96e-97bddaef0e6b.pdf";
+export const MOUNT_DIR = "/" + "991e729a-8f2e-472a-8402-c26bb03b5ea3";
 
-export const mergePDFs = async (entry: string[]) => {
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export async function mergePDFs(entry: string[]) {
 	const dir = process.cwd();
 	const absolutePathArr = fg.sync(entry, {
 		ignore: ["node_modules"],
@@ -21,10 +31,17 @@ export const mergePDFs = async (entry: string[]) => {
 		process.exit(1);
 	}
 
-	const pyodide = await loadPyodide({ indexURL: "./node_modules/pyodide" });
+	const pyodide = await loadPyodide({ indexURL: resolve(__dirname, "pyodide") });
 	await pyodide.loadPackage("micropip");
 	const micropip = pyodide.pyimport("micropip");
-	await micropip.install("pypdf");
+
+	pyodide.FS.mkdir(MOUNT_DIR);
+	pyodide.FS.mount(pyodide.FS.filesystems.NODEFS, { root: __dirname }, MOUNT_DIR);
+	/**
+	 * @see https://github.com/pyodide/pyodide/issues/3246#issuecomment-1312210155
+	 * You need to prefix the path with emfs: or it will be treated as a url
+	*/
+	await micropip.install(`emfs:${MOUNT_DIR}/pyodide/pypdf-3.8.1-py3-none-any.whl`);
 
 	const tempFileNameArr: string[] = [];
 	absolutePathArr.forEach((filePath) => {
@@ -37,18 +54,24 @@ export const mergePDFs = async (entry: string[]) => {
 		from pypdf import PdfWriter
 		from json import loads
 
-		merger = PdfWriter()
+		writer = PdfWriter()
+		writer.add_metadata(
+				{
+						"/Author": "${author}",
+						"/Producer": "pypdf - ${name}",
+				}
+		)
 
 		for path in loads('${JSON.stringify(tempFileNameArr)}'):
-			merger.append(path)
+			writer.append(path)
 
-		merger.write("/${MERGE_PDF_NAME}")
-		merger.close()
+		writer.write("/${MERGE_PDF_NAME}")
+		writer.close()
 	`);
 
 	const outBuffer: Buffer = pyodide.FS.readFile(`/${MERGE_PDF_NAME}`);
 
 	return outBuffer;
-};
+}
 
 export default mergePDFs;

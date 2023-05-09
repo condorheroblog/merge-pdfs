@@ -5,6 +5,7 @@
  */
  {
 	"extends": "@antfu/eslint-config-ts",
+	"ignorePatterns": ["src/pyodide/"],
 	"rules": {
 		"no-tabs": "off",
 		"semi": "off",

@@ -7,7 +7,7 @@ import { greenBright } from "colorette";
 import { mergePDFs } from "../";
 import { name, version } from "../../package.json";
 
-export const mergePdfsCli = async () => {
+export async function mergePdfsCli() {
 	const program = yargs(hideBin(process.argv)).scriptName(name)
 		.usage("$0 <entry...>")
 		.option("o", {
@@ -37,4 +37,4 @@ export const mergePdfsCli = async () => {
 
 	writeFileSync(output, outBuffer);
 	process.stdout.write(greenBright(`\n Saved to ${join(process.cwd(), argv.o)}\n`));
-};
+}
