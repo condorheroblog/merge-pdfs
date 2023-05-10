@@ -5,8 +5,9 @@ import { dirname, extname, resolve } from "node:path";
 import { yellowBright } from "colorette";
 import fg from "fast-glob";
 
-import { author, name } from "../package.json";
+import { name } from "../package.json";
 import { loadPyodide } from "./pyodide/pyodide";
+import { formatDate } from ".";
 
 /**
  * @see https://www.uuidgenerator.net/version4
@@ -50,6 +51,8 @@ export async function mergePDFs(entry: string[]) {
 		pyodide.FS.writeFile(tempFileName, readFileSync(filePath), { encoding: "utf8" });
 	});
 
+	const curDate = formatDate(new Date());
+
 	await pyodide.runPythonAsync(`
 		from pypdf import PdfWriter
 		from json import loads
@@ -57,7 +60,9 @@ export async function mergePDFs(entry: string[]) {
 		writer = PdfWriter()
 		writer.add_metadata(
 				{
-						"/Author": "${author}",
+						"/CreationDate": "${curDate}",
+						"/ModDate": "${curDate}",
+						"/Creator": "${name}",
 						"/Producer": "pypdf - ${name}",
 				}
 		)
