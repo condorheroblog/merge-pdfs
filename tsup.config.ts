@@ -1,4 +1,4 @@
-import copy from "esbuild-copy-files-plugin";
+import { copy } from "esbuild-plugin-copy";
 import { defineConfig } from "tsup";
 
 export default defineConfig({
@@ -10,9 +10,10 @@ export default defineConfig({
 	clean: true,
 	esbuildPlugins: [
 		copy({
-			source: ["./src/pyodide"],
-			target: "./dist",
-			copyWithFolder: true,
+			assets: {
+				from: "./src/pyodide/**/*",
+				to: "./pyodide",
+			},
 		}),
 	],
 });
