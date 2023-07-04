@@ -65,22 +65,22 @@
 	},
 	"dependencies": {
 		"colorette": "^2.0.20",
-		"fast-glob": "^3.2.12",
+		"fast-glob": "^3.3.0",
 		"yargs": "^17.7.2"
 	},
 	"devDependencies": {
-		"@antfu/eslint-config-ts": "^0.38.6",
+		"@antfu/eslint-config-ts": "^0.39.6",
 		"@types/yargs": "^17.0.24",
-		"bumpp": "^9.1.0",
+		"bumpp": "^9.1.1",
 		"esbuild-plugin-copy": "^2.1.1",
-		"eslint": "^8.40.0",
+		"eslint": "^8.44.0",
 		"esno": "^0.16.3",
-		"lint-staged": "^13.2.2",
-		"pdfjs": "^2.4.7",
+		"lint-staged": "^13.2.3",
+		"pdfjs": "^2.5.0",
 		"simple-git-hooks": "^2.8.1",
-		"tsup": "^6.7.0",
-		"typescript": "^5.0.4",
-		"vitest": "^0.31.0"
+		"tsup": "^7.1.0",
+		"typescript": "^5.1.6",
+		"vitest": "^0.32.4"
 	},
 	"simple-git-hooks": {
 		"pre-commit": "npx lint-staged"
